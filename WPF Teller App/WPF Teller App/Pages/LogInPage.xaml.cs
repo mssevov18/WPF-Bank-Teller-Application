@@ -29,8 +29,8 @@ namespace WPF_Teller_App
         public static int PageWidth => 450;
         public static int PageHeigth => 200;
 
-        public MainWindow MainWindow { get; set; }
-        public MainPage MainPage { get; set; }
+        public MainWindow MainWindow;
+        public MainPage MainPage;
 
         public LogInPage()
         {
@@ -60,8 +60,15 @@ namespace WPF_Teller_App
             BankWorker worker = LogIn(UsernameTextBox.Text, PasswordTextBox.Password);
             if (worker is not null)
             {
-                MainWindow.ChangePage(MainPage, MainPage.PageWidth, MainPage.PageHeigth);
+                //MainWindow.ChangePage(MainPage, MainPage.PageWidth, MainPage.PageHeigth);
+
+                // Clear Log in Box, so that next time it is oppened it doesn't have old data
+                UsernameTextBox.Text = string.Empty;
+                PasswordTextBox.Password = string.Empty;
+
                 MainPage.Worker = worker;
+                MainPage.MainWindow = MainWindow;
+                MainWindow.ChangeToMainPage();
             }
 
             // Wrong credentials!

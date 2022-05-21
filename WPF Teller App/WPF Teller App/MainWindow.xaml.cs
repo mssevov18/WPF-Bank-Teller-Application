@@ -38,7 +38,7 @@ namespace WPF_Teller_App
             logInPage.MainPage = mainPage;
 
             //MainFrame.Source = new Uri("Pages/LogInPage.xaml");
-            ChangePage(logInPage, LogInPage.PageWidth, LogInPage.PageHeigth);
+            ChangeToLogInPage();
             this.ResizeMode = ResizeMode.NoResize;
         }
 
@@ -47,6 +47,16 @@ namespace WPF_Teller_App
             MainFrame.Content = page;
             this.Width = width;
             this.Height = height;
+        }
+
+        public void ChangeToLogInPage()
+        {
+            ChangePage(logInPage, LogInPage.PageWidth, LogInPage.PageHeigth);
+        }
+
+        public void ChangeToMainPage()
+        {
+            ChangePage(mainPage, MainPage.PageWidth, MainPage.PageHeigth);
         }
     }
 }

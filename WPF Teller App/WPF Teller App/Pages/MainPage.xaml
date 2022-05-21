@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF_Teller_App.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPageNonAdmin">
 
     <Grid>
@@ -39,6 +39,9 @@
                 </Button>
                 <Button x:Name="AdminPageChange" Grid.Column="1" Click="AdminPageChange_Click">
                     <Image x:Name="AdminPageChangeImage" Source="..\Resources\admin_icon.png"/>
+                </Button>
+                <Button x:Name="LogOut" Grid.Column="3" Click="LogOut_Click">
+                    <Image x:Name="LogOutImage" Source="..\Resources\logout_icon.png"/>
                 </Button>
             </Grid>
         </Grid>

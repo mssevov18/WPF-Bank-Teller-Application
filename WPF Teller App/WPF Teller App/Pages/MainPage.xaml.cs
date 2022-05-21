@@ -25,7 +25,9 @@ namespace WPF_Teller_App.Pages
     public partial class MainPage : Page
     {
         public static int PageWidth => 800;
-        public static int PageHeigth => 450;
+        public static int PageHeigth => 550;
+
+        public MainWindow MainWindow;
 
         WorkerPage workerPage;
         AdminPage  adminPage;
@@ -76,6 +78,15 @@ namespace WPF_Teller_App.Pages
             Brush brushOff = Brushes.LightGray;
             buttonOff.Background = brushOff;
             buttonOn.Background = brushOn;
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Log out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                worker = null;
+                MainWindow.ChangeToLogInPage();
+            }
         }
     }
 } 
