@@ -9,6 +9,10 @@
       Title="AdminPage">
 
     <Grid>
-        <Label Content="✨ you are admining ✨" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--
+        TODO: Make AddUser (:
+        -->
+        <!--<Label Content="✨ you are admining ✨" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        
     </Grid>
 </Page>
