@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Bank_Db_Class_Library;
+
+
 namespace WPF_Teller_App.Pages
 {
     /// <summary>

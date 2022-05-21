@@ -16,4 +16,14 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Bank-Db-Class-Library\Bank Db Class Library\Bank Db Class Library\Bank Db Class Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Bank Db Class Library">
+      <HintPath>..\..\..\Bank-Db-Class-Library\Bank Db Class Library\Bank Db Class Library\bin\Debug\net5.0\Bank Db Class Library.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

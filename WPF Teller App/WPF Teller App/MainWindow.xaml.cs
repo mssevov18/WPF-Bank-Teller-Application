@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF_Teller_App.Data.Models;
+
+//using WPF_Teller_App.Data.Models;
+using Bank_Db_Class_Library;
 using WPF_Teller_App.Pages;
 
 namespace WPF_Teller_App

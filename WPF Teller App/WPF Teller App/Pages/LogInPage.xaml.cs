@@ -13,9 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Security.Cryptography;
-using WPF_Teller_App.Data.Models;
-using WPF_Teller_App.Pages;
 using Microsoft.EntityFrameworkCore;
+
+//using WPF_Teller_App.Data.Models;
+using Bank_Db_Class_Library;
+using WPF_Teller_App.Pages;
 
 namespace WPF_Teller_App
 {
@@ -63,13 +65,13 @@ namespace WPF_Teller_App
             return null;
         }
 
-        private string HashPassword(string unhashed_password, string salt)
-        {
-            return Encoding.ASCII.GetString(
-                        SHA256.Create().ComputeHash(
-                            Encoding.ASCII.GetBytes(unhashed_password)));
-                            //Encoding.ASCII.GetBytes(unhashed_password + salt)));
-        }
+        //private string HashPassword(string unhashed_password, string salt)
+        //{
+        //    return Encoding.ASCII.GetString(
+        //                SHA256.Create().ComputeHash(
+        //                    Encoding.ASCII.GetBytes(unhashed_password)));
+        //                    //Encoding.ASCII.GetBytes(unhashed_password + salt)));
+        //}
 
         private void UsernameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
