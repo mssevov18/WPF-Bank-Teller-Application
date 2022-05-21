@@ -20,5 +20,9 @@
     <ProjectReference Include="..\..\..\Bank Db Class Library\Bank Db Class Library\Bank Db Class Library\Bank Db Class Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Resources\user_icon.png" />
+    <Resource Include="Resources\admin_icon.png" />
+  </ItemGroup>
 
 </Project>

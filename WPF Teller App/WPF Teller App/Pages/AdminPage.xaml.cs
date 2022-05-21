@@ -13,20 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using Bank_Db_Class_Library;
-
-
 namespace WPF_Teller_App.Pages
 {
     /// <summary>
-    /// Interaction logic for MainPageNonAdmin.xaml
+    /// Interaction logic for AdminPage.xaml
     /// </summary>
-    public partial class MainPageNonAdmin : Page
+    public partial class AdminPage : Page
     {
-        public static int PageWidth => 800;
-        public static int PageHeigth => 450;
-
-        public MainPageNonAdmin()
+        public AdminPage()
         {
             InitializeComponent();
         }

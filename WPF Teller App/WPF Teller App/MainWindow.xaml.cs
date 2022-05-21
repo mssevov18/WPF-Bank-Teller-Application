@@ -25,14 +25,14 @@ namespace WPF_Teller_App
     public partial class MainWindow : Window
     {
         LogInPage logInPage;
-        MainPageNonAdmin mainPage;
+        MainPage mainPage;
 
         public MainWindow()
         {
             InitializeComponent();
 
             logInPage = new LogInPage();
-            mainPage = new MainPageNonAdmin();
+            mainPage = new MainPage();
 
             logInPage.MainWindow = this;
             logInPage.MainPage = mainPage;

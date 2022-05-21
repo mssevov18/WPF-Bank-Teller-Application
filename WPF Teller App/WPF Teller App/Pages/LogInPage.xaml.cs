@@ -30,27 +30,50 @@ namespace WPF_Teller_App
         public static int PageHeigth => 200;
 
         public MainWindow MainWindow { get; set; }
-        public MainPageNonAdmin MainPage { get; set; }
+        public MainPage MainPage { get; set; }
 
         public LogInPage()
         {
             InitializeComponent();
+            UsernameTextBox.Focus();
+        }
+
+        public LogInPage(MainWindow mainWindow, MainPage mainPage)
+        {
+            this.MainWindow = mainWindow;
+            this.MainPage = mainPage;
+
+            InitializeComponent();
+            UsernameTextBox.Focus();
         }
 
         private void LogInButton_Click(object sender, RoutedEventArgs e)
         {
             // Maybe??
             // ??Check if username is ok and password is ok??
-            if (LogIn(UsernameTextBox.Text, PasswordTextBox.Password) is not null)
-                MainWindow.ChangePage(MainPage, MainPageNonAdmin.PageWidth, MainPageNonAdmin.PageHeigth);
+            if (UsernameTextBox.Text == string.Empty || PasswordTextBox.Password == string.Empty)
+            {
+                MessageBox.Show("Bad input!");
+                return;
+            }
+
+            BankWorker worker = LogIn(UsernameTextBox.Text, PasswordTextBox.Password);
+            if (worker is not null)
+            {
+                MainWindow.ChangePage(MainPage, MainPage.PageWidth, MainPage.PageHeigth);
+                MainPage.Worker = worker;
+            }
+
+            // Wrong credentials!
             else
-                this.Background = Brushes.Red;
+                MessageBox.Show("Wrong Username/Password");
+            UsernameTextBox.Focus();
         }
 
         private BankWorker LogIn(string username, string unhashed_password)
         {
             BankWorker empty;
-            //Check that neither username nor password textboxes are empty
+            // Check that neither username nor password textboxes are empty
             using (Bank_DatabaseContext bankDbContext = new Bank_DatabaseContext())
             {
                 empty = bankDbContext.BankWorkers.Where(
