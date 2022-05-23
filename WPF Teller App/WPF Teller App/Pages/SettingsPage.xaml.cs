@@ -20,7 +20,7 @@ namespace WPF_Teller_App.Pages
     /// <summary>
     /// Interaction logic for SettingsPage.xaml
     /// </summary>
-    public partial class SettingsPage : Page
+    public partial class SettingsPage : Page, IPageClosingHandler
     {
         public int bankId;
 
@@ -29,6 +29,17 @@ namespace WPF_Teller_App.Pages
         public SettingsPage()
         {
             InitializeComponent();
+        }
+
+        public void ClearAllFields()
+        {
+            BankNameTextBox.Text = string.Empty;
+            BankIdLabel.Content = string.Empty;
+        }
+
+        public bool Close()
+        {
+            return true;
         }
 
         // TODO: Carry the bankId over to adminPage and use it for BankWorkers

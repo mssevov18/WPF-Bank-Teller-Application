@@ -52,7 +52,6 @@ namespace WPF_Teller_App.Pages
             workerPage = new WorkerPage();
             adminPage = new AdminPage();
             settingsPage = new SettingsPage();
-
             settingsPage.adminPage = adminPage;
 
             ContentFrame.Content = workerPage;
@@ -63,6 +62,8 @@ namespace WPF_Teller_App.Pages
         {
             if (Worker.IsAdmin)
             {
+                if (CloseCurrentPage())
+                    return;
                 ContentFrame.Content = adminPage;
                 ChangeActiveButton(AdminPageChange);
             }
@@ -72,6 +73,8 @@ namespace WPF_Teller_App.Pages
 
         private void WorkerPageChange_Click(object sender, RoutedEventArgs e)
         {
+            if (CloseCurrentPage())
+                return;
             ContentFrame.Content = workerPage;
             ChangeActiveButton(WorkerPageChange);
         }
@@ -90,6 +93,8 @@ namespace WPF_Teller_App.Pages
         {
             if (MessageBox.Show("Log out?", "Question", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
+                if (CloseCurrentPage())
+                    return;
                 worker = null;
                 MainWindow.ChangeToLogInPage();
             }
@@ -98,8 +103,20 @@ namespace WPF_Teller_App.Pages
         private void SettingsPageChange_Click(object sender, RoutedEventArgs e)
         {
             // Change to settings page
+            if (CloseCurrentPage())
+                return;
             ContentFrame.Content = settingsPage;
             ChangeActiveButton(SettingsPageChange);
+        }
+
+        private bool CloseCurrentPage()
+        {
+            if (((IPageClosingHandler)ContentFrame.Content).Close())
+            {
+                ((IPageClosingHandler)ContentFrame.Content).ClearAllFields();
+                return false;
+            }
+            return true;
         }
     }
 } 

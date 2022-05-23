@@ -18,13 +18,41 @@ namespace WPF_Teller_App.Pages
     /// <summary>
     /// Interaction logic for AdminPage.xaml
     /// </summary>
-    public partial class AdminPage : Page
+    public partial class AdminPage : Page, IPageClosingHandler
     {
         public int bankId;
 
         public AdminPage()
         {
             InitializeComponent();
+        }
+
+        public bool Close()
+        {
+            if (!AnyFieldsIsEmpty())
+                return MessageBox.Show("You have unsaved changes!. Press Ok to discard them.",
+                                       "Unsaved Changes!", MessageBoxButton.OKCancel)
+                    == MessageBoxResult.OK;
+            return true;
+        }
+
+        private bool AnyFieldsIsEmpty()
+        {
+            return UsernameTextBox.Text == string.Empty &&
+                   PasswordTextBox.Password == string.Empty &&
+                   PasswordConfirmTextBox.Password == string.Empty &&
+                   SalaryTextBox.Text == string.Empty;
+        }
+
+        public void ClearAllFields()
+        {
+            UsernameTextBox.Text = string.Empty;
+            SalaryTextBox.Text = string.Empty;
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
