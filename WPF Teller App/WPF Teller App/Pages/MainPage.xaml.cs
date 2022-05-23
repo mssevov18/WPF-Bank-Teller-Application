@@ -31,6 +31,7 @@ namespace WPF_Teller_App.Pages
 
         WorkerPage workerPage;
         AdminPage  adminPage;
+        SettingsPage settingsPage;
 
         private BankWorker worker;
         public BankWorker  Worker {
@@ -50,9 +51,12 @@ namespace WPF_Teller_App.Pages
             InitializeComponent();
             workerPage = new WorkerPage();
             adminPage = new AdminPage();
+            settingsPage = new SettingsPage();
+
+            settingsPage.adminPage = adminPage;
 
             ContentFrame.Content = workerPage;
-            ChangeActiveButton(WorkerPageChange, AdminPageChange);
+            ChangeActiveButton(WorkerPageChange);
         }
 
         private void AdminPageChange_Click(object sender, RoutedEventArgs e)
@@ -60,7 +64,7 @@ namespace WPF_Teller_App.Pages
             if (Worker.IsAdmin)
             {
                 ContentFrame.Content = adminPage;
-                ChangeActiveButton(AdminPageChange, WorkerPageChange);
+                ChangeActiveButton(AdminPageChange);
             }
             else
                 ContentFrame.Content = workerPage;
@@ -69,14 +73,16 @@ namespace WPF_Teller_App.Pages
         private void WorkerPageChange_Click(object sender, RoutedEventArgs e)
         {
             ContentFrame.Content = workerPage;
-            ChangeActiveButton(WorkerPageChange, AdminPageChange);
+            ChangeActiveButton(WorkerPageChange);
         }
 
-        private void ChangeActiveButton(Button buttonOn, Button buttonOff)
+        private void ChangeActiveButton(Button buttonOn)
         {
             Brush brushOn = Brushes.Gray;
             Brush brushOff = Brushes.LightGray;
-            buttonOff.Background = brushOff;
+            AdminPageChange.Background = brushOff;
+            WorkerPageChange.Background = brushOff;
+            SettingsPageChange.Background = brushOff;
             buttonOn.Background = brushOn;
         }
 
@@ -87,6 +93,13 @@ namespace WPF_Teller_App.Pages
                 worker = null;
                 MainWindow.ChangeToLogInPage();
             }
+        }
+
+        private void SettingsPageChange_Click(object sender, RoutedEventArgs e)
+        {
+            // Change to settings page
+            ContentFrame.Content = settingsPage;
+            ChangeActiveButton(SettingsPageChange);
         }
     }
 } 

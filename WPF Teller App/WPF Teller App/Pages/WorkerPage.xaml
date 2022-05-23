@@ -9,6 +9,19 @@
       Title="WorkerPage">
 
     <Grid>
-        <Label Content="✨ you are working ✨" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <!--<Label Content="✨ you are working ✨" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel x:Name="ComboStackPanel" Orientation="Horizontal">
+            <ComboBox Name="FirstChoiceCombo">
+
+            </ComboBox>
+            <ComboBox Name="SecondChoiceCombo">
+
+            </ComboBox>
+        </StackPanel>
     </Grid>
 </Page>

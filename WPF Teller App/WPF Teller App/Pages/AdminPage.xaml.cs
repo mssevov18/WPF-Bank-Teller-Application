@@ -20,6 +20,8 @@ namespace WPF_Teller_App.Pages
     /// </summary>
     public partial class AdminPage : Page
     {
+        public int bankId;
+
         public AdminPage()
         {
             InitializeComponent();

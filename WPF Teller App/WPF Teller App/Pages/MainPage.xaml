@@ -20,7 +20,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Resources>
@@ -40,7 +41,10 @@
                 <Button x:Name="AdminPageChange" Grid.Column="1" Click="AdminPageChange_Click">
                     <Image x:Name="AdminPageChangeImage" Source="..\Resources\admin_icon.png"/>
                 </Button>
-                <Button x:Name="LogOut" Grid.Column="3" Click="LogOut_Click">
+                <Button x:Name="SettingsPageChange" Grid.Column="3" Click="SettingsPageChange_Click">
+                    <Image x:Name="SettingsImage" Source="..\Resources\settings_icon.png"/>
+                </Button>
+                <Button x:Name="LogOut" Grid.Column="4" Click="LogOut_Click">
                     <Image x:Name="LogOutImage" Source="..\Resources\logout_icon.png"/>
                 </Button>
             </Grid>

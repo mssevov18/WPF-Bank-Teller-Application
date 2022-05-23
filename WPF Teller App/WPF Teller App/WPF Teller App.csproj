@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Resources\logout_icon.png" />
+    <None Remove="Resources\settings_icon.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,8 +27,13 @@
 
   <ItemGroup>
     <Resource Include="Resources\logout_icon.png" />
+    <Resource Include="Resources\settings_icon.png" />
     <Resource Include="Resources\user_icon.png" />
     <Resource Include="Resources\admin_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UserControls\" />
   </ItemGroup>
 
 </Project>
