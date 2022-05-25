@@ -9,39 +9,23 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminPage">
+<!--
+TODO: Make AddUser (:
+FIX HOW IT LOOKS!!!!!!!
+
+
+-->
+
 
     <Grid>
-        <!--
-        TODO: Make AddUser (:
-        -->
-        <!--<Label Content="✨ you are admining ✨" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-
-        <!-- Move Create Person to a user controll -->
-        <StackPanel Margin="10 0 0 0">
-            
-            <!-- Move Create Worker to a user controll -->
-            <Label Content="Person" FontSize="32"
-                   Margin="0 0 0 5" HorizontalAlignment="Left"
-                   BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
+        <StackPanel>
             <Grid>
-                
-            </Grid>
-
-            <Label Content="Bank Worker" FontSize="32"
-                   Margin="0 20 0 5" HorizontalAlignment="Left"
-                   BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="6*"/>
-                </Grid.RowDefinitions>
-                
-    <!--https://stackoverflow.com/questions/9233148/can-i-have-one-style-with-multiple-targettype-in-wpf-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.Resources>
+                    <!--https://stackoverflow.com/questions/9233148/can-i-have-one-style-with-multiple-targettype-in-wpf-->
                     <Style TargetType="TextBox">
                         <Setter Property="MinWidth" Value="100"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -59,35 +43,92 @@
                     </Style>
                 </Grid.Resources>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Label Content="Username: "/>
-                    <TextBox x:Name="UsernameTextBox"/>
+                <!-- Move Create Person to a user controll -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Label Content="Personal Data" FontSize="32"
+                       Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
+                       BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <Label Content="Firstname: "/>
+                        <TextBox x:Name="FirstnameTextBox"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                        <Label Content="Middlename: "/>
+                        <TextBox x:Name="MiddlenameTextBox"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="2">
+                        <Label Content="Lastname: "/>
+                        <TextBox x:Name="LastnameTextBox"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="3">
+                        <Label Content="EGN: "/>
+                        <TextBox x:Name="EGNTextBox"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="4">
+                        <Label Content="Address: "/>
+                        <TextBox x:Name="AddressTextBox" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="5">
+                        <Label Content="Date of Birth: "/>
+                        <DatePicker x:Name="BirthDatePicker"/>
+                    </StackPanel>
+                </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Label Content="Password: "/>
-                    <PasswordBox x:Name="PasswordTextBox"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2">
-                    <Label Content="Password Confirm: "/>
-                    <PasswordBox x:Name="PasswordConfirmTextBox"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="3">
-                    <Label Content="Is Admin: "/>
-                    <CheckBox x:Name="IsAdminCheckBox" IsChecked="False" VerticalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="4">
-                    <Label Content="Salary: "/>
-                    <TextBox x:Name="SalaryTextBox"/>
+
+                <!-- Move Create Worker to a user controll -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Label Content="Bank Worker Data" FontSize="32"
+                    Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
+                    BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <Label Content="Username: "/>
+                            <TextBox x:Name="UsernameTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Label Content="Password: "/>
+                            <PasswordBox x:Name="PasswordTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2">
+                            <Label Content="Password Confirm: "/>
+                            <PasswordBox x:Name="PasswordConfirmTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <Label Content="Is Admin: "/>
+                            <CheckBox x:Name="IsAdminCheckBox" IsChecked="False" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="4">
+                            <Label Content="Salary: "/>
+                            <TextBox x:Name="SalaryTextBox"/>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
             </Grid>
 
             <Button x:Name="SubmitButton" Content="Submit"
-                    Padding="5 5 5 5" Margin="0 20 0 0"
+                    Padding="5 5 5 5" Margin="0 50 0 0"
                     FontSize="32" BorderThickness="2.5 2.5 2.5 2.5"
                     Click="SubmitButton_Click"
                     Width="auto" HorizontalAlignment="Left"/>
-
         </StackPanel>
-
     </Grid>
+
 </Page>
