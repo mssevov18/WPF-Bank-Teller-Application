@@ -42,7 +42,6 @@ namespace WPF_Teller_App.Pages
             return true;
         }
 
-        // TODO: Carry the bankId over to adminPage and use it for BankWorkers
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             if (BankNameTextBox.Text is not null)

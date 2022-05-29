@@ -45,44 +45,44 @@ FIX HOW IT LOOKS!!!!!!!
 
                 <!-- Move Create Person to a user controll -->
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <Label Content="Personal Data" FontSize="32"
-                       Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
-                       BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                
-                    <StackPanel Orientation="Horizontal" Grid.Row="0">
-                        <Label Content="Firstname: "/>
-                        <TextBox x:Name="FirstnameTextBox"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Label Content="Middlename: "/>
-                        <TextBox x:Name="MiddlenameTextBox"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="2">
-                        <Label Content="Lastname: "/>
-                        <TextBox x:Name="LastnameTextBox"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="3">
-                        <Label Content="EGN: "/>
-                        <TextBox x:Name="EGNTextBox"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="4">
-                        <Label Content="Address: "/>
-                        <TextBox x:Name="AddressTextBox" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Grid.Row="5">
-                        <Label Content="Date of Birth: "/>
-                        <DatePicker x:Name="BirthDatePicker"/>
-                    </StackPanel>
-                </Grid>
+                    <Label Content="Personal Data" FontSize="32"
+                           Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
+                           BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <Label Content="Firstname: "/>
+                            <TextBox x:Name="FirstnameTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <Label Content="Middlename: "/>
+                            <TextBox x:Name="MiddlenameTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="2">
+                            <Label Content="Lastname: "/>
+                            <TextBox x:Name="LastnameTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="3">
+                            <Label Content="EGN: "/>
+                            <TextBox x:Name="EGNTextBox"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="4">
+                            <Label Content="Address: "/>
+                            <TextBox x:Name="AddressTextBox" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="5">
+                            <Label Content="Date of Birth: "/>
+                            <DatePicker x:Name="BirthDatePicker"/>
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
 
                 <!-- Move Create Worker to a user controll -->
@@ -105,11 +105,11 @@ FIX HOW IT LOOKS!!!!!!!
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="1">
                             <Label Content="Password: "/>
-                            <PasswordBox x:Name="PasswordTextBox"/>
+                            <PasswordBox x:Name="PasswordTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="2">
                             <Label Content="Password Confirm: "/>
-                            <PasswordBox x:Name="PasswordConfirmTextBox"/>
+                            <PasswordBox x:Name="PasswordConfirmTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Grid.Row="3">
                             <Label Content="Is Admin: "/>
@@ -127,7 +127,7 @@ FIX HOW IT LOOKS!!!!!!!
                     Padding="5 5 5 5" Margin="0 50 0 0"
                     FontSize="32" BorderThickness="2.5 2.5 2.5 2.5"
                     Click="SubmitButton_Click"
-                    Width="auto" HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 

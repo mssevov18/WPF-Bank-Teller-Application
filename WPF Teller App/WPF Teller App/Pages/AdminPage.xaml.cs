@@ -16,8 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 /*
-TODO: Test PasswordCheckBox against PasswordBox.
-TODO: Add salt and hashed passwords
+TODO_HIGH: Test PasswordCheckBox against PasswordBox.
+IDEA: Add salt and hashed passwords
 
  
 */
@@ -62,6 +62,15 @@ namespace WPF_Teller_App.Pages
 
         public void ClearAllFields()
         {
+            // Personal Data
+            FirstnameTextBox.Text = string.Empty;
+            MiddlenameTextBox.Text = string.Empty;
+            LastnameTextBox.Text = string.Empty;
+            EGNTextBox.Text = string.Empty;
+            AddressTextBox.Text = string.Empty;
+            BirthDatePicker.Text = string.Empty;
+
+            // Worker Data
             UsernameTextBox.Text = string.Empty;
             SalaryTextBox.Text = string.Empty;
             IsAdminCheckBox.IsChecked = false;
@@ -69,7 +78,7 @@ namespace WPF_Teller_App.Pages
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Add Data checking!!!
+            // TODO_HIGH: Add Data checking!!!
             //       Is data ok?
             //       Do passwords match?
             //       Does egn exist?
@@ -89,9 +98,8 @@ namespace WPF_Teller_App.Pages
                 MessageBox.Show("Bank not here");
                 return;
                 //throw new Exception("Bank not here");
-            }    
+            }
 
-            // TODO: Check if person exists in db
             Person person = null;
             if (testPerson is null)
             {
@@ -112,8 +120,7 @@ namespace WPF_Teller_App.Pages
                 bankId,
                 EGNTextBox.Text);
 
-            // TODO: Serialize person and bankworker to json (:
-            // ERROR: For some reason is_successfull gets either 0/1 not null/0/1
+            // Serialize person and bankworker to json (:
             using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
             {
                 if (person != null)
@@ -139,28 +146,25 @@ namespace WPF_Teller_App.Pages
             //                $"BankWorker: {JsonSerializer.Serialize<BankWorker>(bankWorker)}");
 
 
-/* IDEA:
-* Request system
-* 
-* Example:
-* Add BankWorker SerializedJsonClass
-* - The Request parser will create a new BankWorker class from the 'SerializedJsonClass'
+        }
 
-IGNORE 
-|* 1st Word: Add/Update/Remove
-|* * -Add: Add data, should it fail?
-|* * -Update: Change data if it exists, Add data if it doens't
-|* * -Remove: Remove data if it exists
-|* 
-|* !!! The class must have an assigned Id for Update and Remove to work, !!!
-|* !!! the Id won't be used for changing db data                         !!!
-|* 
-|* 2nd Word: Table affected
-IGNORE       
-
-* 3rd "Words": Json Serialized Class
-* 
-*/
+        private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (PasswordTextBox.Password == string.Empty || PasswordConfirmTextBox.Password == string.Empty)
+            {
+                PasswordConfirmTextBox.Background = Brushes.White;
+                PasswordTextBox.Background = Brushes.White;
+            }
+            else if (PasswordConfirmTextBox.Password != PasswordTextBox.Password)
+            {
+                PasswordConfirmTextBox.Background = Brushes.Red;
+                PasswordTextBox.Background = Brushes.Red;
+            }
+            else
+            {
+                PasswordConfirmTextBox.Background = Brushes.Green;
+                PasswordTextBox.Background = Brushes.Green;
+            }
         }
     }
 }

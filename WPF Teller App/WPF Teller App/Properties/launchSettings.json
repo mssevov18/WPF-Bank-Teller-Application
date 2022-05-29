@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WPF Teller App": {
+      "commandName": "Project",
+      "commandLineArgs": "Server=.\\SQLExpress;Database=Bank_Database;Trusted_Connection=True;"
+    }
+  }
+}
