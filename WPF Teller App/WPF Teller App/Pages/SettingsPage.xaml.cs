@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 
 using Bank_Db_Class_Library;
 
+///TODO_HIGH: Add regional settings and such to assist in IBAN Generation
+
 namespace WPF_Teller_App.Pages
 {
     /// <summary>
@@ -44,12 +46,16 @@ namespace WPF_Teller_App.Pages
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (BankNameTextBox.Text is not null)
+            if (BankNameTextBox.Text != string.Empty)
             {
                 using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
                 {
 #warning FirstOrDefault can return int.default -> May cause errors!
-                    bankId = dbContext.Banks.Where(b => b.Name == BankNameTextBox.Text).FirstOrDefault().BankId;
+                    Bank bank = dbContext.Banks.Where(b => b.Name == BankNameTextBox.Text).FirstOrDefault();
+                    if (bank is not null)
+                        bankId = bank.BankId;
+                    else
+                        bankId = 0;
                 }
                 BankIdLabel.Content = $"Bank Id: {bankId}";
                 adminPage.bankId = bankId;

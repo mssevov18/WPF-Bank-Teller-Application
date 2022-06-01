@@ -17,13 +17,29 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="ComboStackPanel" Orientation="Horizontal">
-            <ComboBox Name="FirstChoiceCombo">
-
+        <StackPanel x:Name="ComboStackPanel" Margin="5 10 0 0" Orientation="Horizontal">
+<!--TODO_LOW: Read up on watermarks to add default values-->
+            <ComboBox Name="FirstChoiceCombo"
+                      SelectionChanged="FirstChoiceCombo_SelectionChanged"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      Margin="0 0 10 0">
+                <ComboBoxItem Tag="A" Content="Account"/>
+                <ComboBoxItem Tag="C" Content="Card"/>
+                <ComboBoxItem Tag="R" Content="Card Reader"/>
+                <ComboBoxItem Tag="T" Content="Transaction"/>
             </ComboBox>
-            <ComboBox Name="SecondChoiceCombo">
-
+            <ComboBox Name="SecondChoiceCombo"
+                      SelectionChanged="SecondChoiceCombo_SelectionChanged"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      Margin="0 0 10 0"
+                      Visibility="Collapsed" IsEnabled="False">
+                <ComboBoxItem Tag="A" Content="Add"/>
+                <ComboBoxItem Tag="F" Content="Find"/>
+                <ComboBoxItem Tag="U" x:Name="UpdateComboBoxItem" Content="Update"/>
+                <ComboBoxItem Tag="R" x:Name="RemoveComboBoxItem" Content="Remove"/>
             </ComboBox>
+            <Button x:Name="SubmitButton" Content="Submit" Margin="0 0 10 0" Click="SubmitButton_Click"/>
+            <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -40,8 +40,4 @@
     <Resource Include="Resources\admin_icon.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UserControls\" />
-  </ItemGroup>
-
 </Project>

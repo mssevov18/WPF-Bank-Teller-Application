@@ -15,12 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-/*
-TODO_HIGH: Test PasswordCheckBox against PasswordBox.
-IDEA: Add salt and hashed passwords
-
- 
-*/
+///IDEA: Add salt and hashed passwords
 
 namespace WPF_Teller_App.Pages
 {
@@ -39,58 +34,48 @@ namespace WPF_Teller_App.Pages
         public bool Close()
         {
             if (!AnyFieldsIsEmpty())
-                return MessageBox.Show("You have unsaved changes!. Press Ok to discard them.",
-                                       "Unsaved Changes!", MessageBoxButton.OKCancel)
-                    == MessageBoxResult.OK;
+            {
+                if (MessageBox.Show("You have unsaved changes!. Press Ok to discard them.",
+                                      "Unsaved Changes!", MessageBoxButton.OKCancel)
+                   == MessageBoxResult.OK)
+                    CreateBankWorkerUserControl.DefaultPasswordTextBox();
+                else
+                    return false;
+            }
             return true;
         }
 
         private bool AnyFieldsIsEmpty()
         {
             //A bit long innit?
-            return FirstnameTextBox.Text == string.Empty &&
-                   MiddlenameTextBox.Text == string.Empty &&
-                   LastnameTextBox.Text == string.Empty &&
-                   EGNTextBox.Text == string.Empty &&
-                   AddressTextBox.Text == string.Empty &&
-                   BirthDatePicker.Text == string.Empty &&
-                   UsernameTextBox.Text == string.Empty &&
-                   PasswordTextBox.Password == string.Empty &&
-                   PasswordConfirmTextBox.Password == string.Empty &&
-                   SalaryTextBox.Text == string.Empty;
+            return CreateBankWorkerUserControl.AreAllFieldsEmpty();
         }
 
         public void ClearAllFields()
         {
-            // Personal Data
-            FirstnameTextBox.Text = string.Empty;
-            MiddlenameTextBox.Text = string.Empty;
-            LastnameTextBox.Text = string.Empty;
-            EGNTextBox.Text = string.Empty;
-            AddressTextBox.Text = string.Empty;
-            BirthDatePicker.Text = string.Empty;
-
-            // Worker Data
-            UsernameTextBox.Text = string.Empty;
-            SalaryTextBox.Text = string.Empty;
-            IsAdminCheckBox.IsChecked = false;
+            CreateBankWorkerUserControl.ClearAllFields();
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            // TODO_HIGH: Add Data checking!!!
-            //       Is data ok?
-            //       Do passwords match?
-            //       Does egn exist?
+            ///TODO_HIGH: Add Data checking!!!
+            ///       Is data ok?
+            ///       Do passwords match?
+            ///       Does egn exist?
+
+            try
+            {
+
 
             // Send Request!
+#warning Bank, Person and BankWorker are all nullable and may return null. Investigate!
             Bank? testBank;
             Person? testPerson;
             BankWorker? testWorker;
             using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
             {
                 testBank = dbContext.Banks.Where(bank => bank.BankId == bankId).FirstOrDefault();
-                testPerson = dbContext.People.Where(person => person.Egn == EGNTextBox.Text).FirstOrDefault();
+                testPerson = dbContext.People.Where(person => person.Egn == CreateBankWorkerUserControl.PersonUserControl.EGN).FirstOrDefault();
             }
 
             if (testBank is null)
@@ -102,23 +87,15 @@ namespace WPF_Teller_App.Pages
 
             Person person = null;
             if (testPerson is null)
-            {
-                person = new Person(
-                      EGNTextBox.Text,
-                      FirstnameTextBox.Text,
-                      MiddlenameTextBox.Text,
-                      LastnameTextBox.Text,
-                      AddressTextBox.Text,
-                      BirthDatePicker.SelectedDate.GetValueOrDefault());
-            }
+                person = CreateBankWorkerUserControl.PersonUserControl.GetPerson();
 
             BankWorker bankWorker = new BankWorker(
-                UsernameTextBox.Text,
-                PasswordTextBox.Password,
-                IsAdminCheckBox.IsChecked.GetValueOrDefault(),
-                decimal.Parse(SalaryTextBox.Text),
+                CreateBankWorkerUserControl.Username,
+                CreateBankWorkerUserControl.Password,
+                CreateBankWorkerUserControl.IsAdmin,
+                decimal.Parse(CreateBankWorkerUserControl.Salary),
                 bankId,
-                EGNTextBox.Text);
+                CreateBankWorkerUserControl.PersonUserControl.EGN);
 
             // Serialize person and bankworker to json (:
             using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
@@ -139,32 +116,20 @@ namespace WPF_Teller_App.Pages
                     null,
                     JsonSerializer.Serialize<BankWorker>(bankWorker)));
                 dbContext.SaveChanges();
+
+                ///TODO: Freeze App while adding the Worker and Person
             }
 
-            //MessageBox.Show($"Bank: {JsonSerializer.Serialize<Bank>(bank)}\n" +
-            //                $"Person: {JsonSerializer.Serialize<Person>(person)}\n" +
-            //                $"BankWorker: {JsonSerializer.Serialize<BankWorker>(bankWorker)}");
+                //MessageBox.Show($"Bank: {JsonSerializer.Serialize<Bank>(bank)}\n" +
+                //                $"Person: {JsonSerializer.Serialize<Person>(person)}\n" +
+                //                $"BankWorker: {JsonSerializer.Serialize<BankWorker>(bankWorker)}");
 
-
-        }
-
-        private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (PasswordTextBox.Password == string.Empty || PasswordConfirmTextBox.Password == string.Empty)
+            }
+            catch(Exception exception)
             {
-                PasswordConfirmTextBox.Background = Brushes.White;
-                PasswordTextBox.Background = Brushes.White;
+                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
             }
-            else if (PasswordConfirmTextBox.Password != PasswordTextBox.Password)
-            {
-                PasswordConfirmTextBox.Background = Brushes.Red;
-                PasswordTextBox.Background = Brushes.Red;
-            }
-            else
-            {
-                PasswordConfirmTextBox.Background = Brushes.Green;
-                PasswordTextBox.Background = Brushes.Green;
-            }
+
         }
     }
 }

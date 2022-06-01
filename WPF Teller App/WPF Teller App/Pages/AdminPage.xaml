@@ -6,26 +6,20 @@
       xmlns:local="clr-namespace:WPF_Teller_App.Pages"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:uc="clr-namespace:WPF_Teller_App.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminPage">
-<!--
-TODO: Make AddUser (:
-FIX HOW IT LOOKS!!!!!!!
-
-
--->
-
-
     <Grid>
         <StackPanel>
-            <Grid>
+            <uc:CreateBankWorker x:Name="CreateBankWorkerUserControl"/>
+            <!--<Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.Resources>
-                    <!--https://stackoverflow.com/questions/9233148/can-i-have-one-style-with-multiple-targettype-in-wpf-->
+                    --><!--https://stackoverflow.com/questions/9233148/can-i-have-one-style-with-multiple-targettype-in-wpf--><!--
                     <Style TargetType="TextBox">
                         <Setter Property="MinWidth" Value="100"/>
                         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -43,8 +37,8 @@ FIX HOW IT LOOKS!!!!!!!
                     </Style>
                 </Grid.Resources>
 
-                <!-- Move Create Person to a user controll -->
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
+                --><!-- Move Create Person to a user controll -->
+                <!--<StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Label Content="Personal Data" FontSize="32"
                            Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
                            BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
@@ -83,10 +77,11 @@ FIX HOW IT LOOKS!!!!!!!
                             <DatePicker x:Name="BirthDatePicker"/>
                         </StackPanel>
                     </Grid>
-                </StackPanel>
+                </StackPanel>--><!--
+                <uc:CreatePerson x:Name="CreatePersonUserControl" Grid.Column="0"/>
 
-                <!-- Move Create Worker to a user controll -->
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+                --><!-- Move Create Worker to a user controll -->
+                <!--<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Label Content="Bank Worker Data" FontSize="32"
                     Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
                     BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
@@ -120,8 +115,9 @@ FIX HOW IT LOOKS!!!!!!!
                             <TextBox x:Name="SalaryTextBox"/>
                         </StackPanel>
                     </Grid>
-                </StackPanel>
-            </Grid>
+                </StackPanel>--><!--
+                <uc:CreateBankWorker x:Name="CreateBankWorkerUserControl" Grid.Column="1"/>
+            </Grid>-->
 
             <Button x:Name="SubmitButton" Content="Submit"
                     Padding="5 5 5 5" Margin="0 50 0 0"
