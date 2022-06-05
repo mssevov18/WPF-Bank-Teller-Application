@@ -12,10 +12,10 @@
 
     <Grid>
         <StackPanel Height="50" Orientation="Horizontal">
-            <Label Content="Bank Name: "/>
+            <!--<Label Content="Bank Name: "/>
             <TextBox Width="50" x:Name="BankNameTextBox" Text=""/>
             <Button Width="50" x:Name="SubmitButton" Content="Submit" Click="SubmitButton_Click"/>
-            <Label x:Name="BankIdLabel" Content="Bank Id: ?"/>
+            <Label x:Name="BankIdLabel" Content="Bank Id: ?"/>-->
             
         </StackPanel>
     </Grid>

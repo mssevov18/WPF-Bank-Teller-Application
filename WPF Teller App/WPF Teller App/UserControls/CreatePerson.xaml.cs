@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,6 +65,45 @@ namespace WPF_Teller_App.UserControls
             EGNTextBox.Text = string.Empty;
             AddressTextBox.Text = string.Empty;
             BirthDatePicker.Text = string.Empty;
+        }
+
+        public void Submit()
+        {
+            try
+            {
+                // Send Request!
+#warning Person is nullable and may return null. Investigate!
+                Person? testPerson;
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    testPerson = dbContext.People.Where(person => person.Egn == EGN).FirstOrDefault();
+                //}
+
+                Person person = null;
+                if (testPerson is null)
+                    person = this.GetPerson();
+
+                // Serialize persons to json (:
+                string serializedPerson = JsonSerializer.Serialize<Person>(person);
+
+                //using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                //{
+                    if (person != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Person",
+                            null,
+                            serializedPerson));
+
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
+            }
         }
     }
 }

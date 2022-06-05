@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,12 +54,79 @@ namespace WPF_Teller_App.UserControls
             PasswordConfirmTextBox.Password = string.Empty;
             IsAdminCheckBox.IsChecked = false;
         }
+        public void Submit()
+        {
+            try
+            {
+                // Send Request!
+#warning Bank, Person and BankWorker are all nullable and may return null. Investigate!
+                Bank? testBank;
+                Person? testPerson;
+                BankWorker? testWorker;
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    testBank = dbContext.Banks.Where(bank => bank.BankId == Bank_DatabaseContext.BankId).FirstOrDefault();
+                    testPerson = dbContext.People.Where(person => person.Egn == PersonUserControl.EGN).FirstOrDefault();
+                }
+
+                if (testBank is null)
+                {
+                    MessageBox.Show("Bank not here");
+                    return;
+                    //throw new Exception("Bank not here");
+                }
+
+                Person person = null;
+                if (testPerson is null)
+                    person = PersonUserControl.GetPerson();
+
+                BankWorker bankWorker = new BankWorker(
+                    Username,
+                    Password,
+                    IsAdmin,
+                    decimal.Parse(Salary),
+                    Bank_DatabaseContext.BankId,
+                    PersonUserControl.EGN);
+
+                string serializedPerson = JsonSerializer.Serialize<Person>(person);
+                string serializedBankWorker = JsonSerializer.Serialize<BankWorker>(bankWorker);
+
+                // Serialize person and bankworker to json (:
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    if (person != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Person",
+                            null,
+                            serializedPerson));
+
+                    dbContext.Requests.Add(new Request(
+                        "T",
+                        DateTime.Now,
+                        null,
+                        "Bank_Worker",
+                        null,
+                        serializedBankWorker));
+                    dbContext.SaveChanges();
+
+                    ///TODO: Freeze App while adding the Worker and Person and show a success/failure message
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
+            }
+        }
 
         public void DefaultPasswordTextBox()
         {
             PasswordConfirmTextBox.Background = Brushes.White;
             PasswordTextBox.Background = Brushes.White;
         }
+
 
         private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
         {

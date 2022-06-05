@@ -10,121 +10,41 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminPage">
+
+    <!--Can use similar combobox system as worker page-->
+    <!--TODO: Add Find BankWorker-->
+    <!--TODO: Add Remove BankWorker-->
+    <!--TODO: Add Update BankWorker-->
+
     <Grid>
-        <StackPanel>
-            <uc:CreateBankWorker x:Name="CreateBankWorkerUserControl"/>
-            <!--<Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.Resources>
-                    --><!--https://stackoverflow.com/questions/9233148/can-i-have-one-style-with-multiple-targettype-in-wpf--><!--
-                    <Style TargetType="TextBox">
-                        <Setter Property="MinWidth" Value="100"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="PasswordBox">
-                        <Setter Property="MinWidth" Value="100"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="Margin" Value="0 0 0 5"/>
-                    </Style>
-                    <Style TargetType="Label">
-                        <Setter Property="Width" Value="125"/>
-                    </Style>
-                </Grid.Resources>
-
-                --><!-- Move Create Person to a user controll -->
-                <!--<StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <Label Content="Personal Data" FontSize="32"
-                           Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
-                           BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <Label Content="Firstname: "/>
-                            <TextBox x:Name="FirstnameTextBox"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <Label Content="Middlename: "/>
-                            <TextBox x:Name="MiddlenameTextBox"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="2">
-                            <Label Content="Lastname: "/>
-                            <TextBox x:Name="LastnameTextBox"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                            <Label Content="EGN: "/>
-                            <TextBox x:Name="EGNTextBox"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="4">
-                            <Label Content="Address: "/>
-                            <TextBox x:Name="AddressTextBox" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="5">
-                            <Label Content="Date of Birth: "/>
-                            <DatePicker x:Name="BirthDatePicker"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>--><!--
-                <uc:CreatePerson x:Name="CreatePersonUserControl" Grid.Column="0"/>
-
-                --><!-- Move Create Worker to a user controll -->
-                <!--<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <Label Content="Bank Worker Data" FontSize="32"
-                    Width="auto" Margin="0 0 0 5" HorizontalAlignment="Left"
-                    BorderBrush="Black" BorderThickness="0 0 0 2.5"/>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <Label Content="Username: "/>
-                            <TextBox x:Name="UsernameTextBox"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <Label Content="Password: "/>
-                            <PasswordBox x:Name="PasswordTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="2">
-                            <Label Content="Password Confirm: "/>
-                            <PasswordBox x:Name="PasswordConfirmTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                            <Label Content="Is Admin: "/>
-                            <CheckBox x:Name="IsAdminCheckBox" IsChecked="False" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="4">
-                            <Label Content="Salary: "/>
-                            <TextBox x:Name="SalaryTextBox"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>--><!--
-                <uc:CreateBankWorker x:Name="CreateBankWorkerUserControl" Grid.Column="1"/>
-            </Grid>-->
-
-            <Button x:Name="SubmitButton" Content="Submit"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <!--<Button x:Name="SubmitButton" Content="Submit"
                     Padding="5 5 5 5" Margin="0 50 0 0"
                     FontSize="32" BorderThickness="2.5 2.5 2.5 2.5"
                     Click="SubmitButton_Click"
-                    HorizontalAlignment="Center"/>
+                    HorizontalAlignment="Center"/>-->
+
+        <StackPanel x:Name="ComboStackPanel" Grid.Row="0" Margin="5 10 0 0" Orientation="Horizontal">
+            <!--TODO_LOW: Read up on watermarks to add default values-->
+            <ComboBox Name="FirstChoiceCombo"
+                      SelectionChanged="FirstChoiceCombo_SelectionChanged"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                      Margin="0 0 10 0">
+                <ComboBoxItem Tag="A" Content="Add"/>
+                <ComboBoxItem Tag="F" Content="Find"/>
+                <ComboBoxItem Tag="U" Content="Update"/>
+                <ComboBoxItem Tag="R" Content="Remove"/>
+            </ComboBox>
+            <Button x:Name="SubmitButton" Content="Submit" Margin="0 0 10 0" Click="SubmitButton_Click"/>
+            <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"/>
         </StackPanel>
+
+        <!--TODO_HIGH: HOW TO SWITCH BETWEEN USER CONTROLS-->
+        <ContentControl x:Name="MainContentControl" Grid.Row="1"/>
+        <!--<uc:CreateBankWorker x:Name="CreateBankWorkerUserControl" Grid.Row="1"/>-->
     </Grid>
 
 </Page>

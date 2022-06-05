@@ -17,7 +17,7 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel x:Name="ComboStackPanel" Margin="5 10 0 0" Orientation="Horizontal">
+        <StackPanel x:Name="ComboStackPanel" Grid.Row="0" Margin="5 10 0 0" Orientation="Horizontal">
 <!--TODO_LOW: Read up on watermarks to add default values-->
             <ComboBox Name="FirstChoiceCombo"
                       SelectionChanged="FirstChoiceCombo_SelectionChanged"
@@ -41,5 +41,8 @@
             <Button x:Name="SubmitButton" Content="Submit" Margin="0 0 10 0" Click="SubmitButton_Click"/>
             <Button x:Name="ClearButton" Content="Clear" Click="ClearButton_Click"/>
         </StackPanel>
+        
+<!--TODO_HIGH: HOW TO SWITCH BETWEEN USER CONTROLS-->
+        <ContentControl x:Name="MainContentControl" Grid.Row="1"/>
     </Grid>
 </Page>

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Bank_Db_Class_Library;
 
 ///TODO_HIGH: Add regional settings and such to assist in IBAN Generation
+///TODO_HIGH: Move bankId to arguments
 
 namespace WPF_Teller_App.Pages
 {
@@ -24,42 +25,52 @@ namespace WPF_Teller_App.Pages
     /// </summary>
     public partial class SettingsPage : Page, IPageClosingHandler
     {
-        public int bankId;
-
         public AdminPage adminPage;
+        public WorkerPage workerPage;
 
         public SettingsPage()
         {
+            this.Title = "Settings";
+
             InitializeComponent();
         }
 
+#warning Not implemented "public void ClearAllFields()"
         public void ClearAllFields()
         {
-            BankNameTextBox.Text = string.Empty;
-            BankIdLabel.Content = string.Empty;
+            //BankNameTextBox.Text = string.Empty;
+            //BankIdLabel.Content = string.Empty;
         }
 
+#warning Not implemented "public bool Close()"
         public bool Close()
         {
             return true;
         }
 
-        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+#warning Not implemented "public bool IsMainFieldEmpty()"
+        public bool IsMainFieldEmpty()
         {
-            if (BankNameTextBox.Text != string.Empty)
-            {
-                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
-                {
-#warning FirstOrDefault can return int.default -> May cause errors!
-                    Bank bank = dbContext.Banks.Where(b => b.Name == BankNameTextBox.Text).FirstOrDefault();
-                    if (bank is not null)
-                        bankId = bank.BankId;
-                    else
-                        bankId = 0;
-                }
-                BankIdLabel.Content = $"Bank Id: {bankId}";
-                adminPage.bankId = bankId;
-            }
+            return true;
         }
+
+        //        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        //        {
+        //            if (BankNameTextBox.Text != string.Empty)
+        //            {
+        //                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+        //                {
+        //#warning FirstOrDefault can return int.default -> May cause errors!
+        //                    Bank bank = dbContext.Banks.Where(b => b.Name == BankNameTextBox.Text).FirstOrDefault();
+        //                    if (bank is not null)
+        //                        bankId = bank.BankId;
+        //                    else
+        //                        bankId = 0;
+        //                }
+        //                BankIdLabel.Content = $"Bank Id: {bankId}";
+        //                adminPage.bankId = bankId;
+        //                workerPage.bankId = bankId;
+        //            }
+        //        }
     }
 }

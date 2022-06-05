@@ -43,6 +43,11 @@
                 <Button x:Name="AdminPageChange" Grid.Column="1" Click="AdminPageChange_Click">
                     <Image x:Name="AdminPageChangeImage" Source="..\Resources\admin_icon.png"/>
                 </Button>
+
+                <Label x:Name="TitleLabel" FontSize="32"
+                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                       Grid.Column="2"/>
+
                 <Button x:Name="SettingsPageChange" Grid.Column="3" Click="SettingsPageChange_Click">
                     <Image x:Name="SettingsImage" Source="..\Resources\settings_icon.png"/>
                 </Button>

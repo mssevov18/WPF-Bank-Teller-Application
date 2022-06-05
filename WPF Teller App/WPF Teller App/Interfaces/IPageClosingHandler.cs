@@ -13,6 +13,7 @@ namespace WPF_Teller_App.Pages
     public interface IPageClosingHandler
     {
         public bool Close();
+        public bool IsMainFieldEmpty();
         public void ClearAllFields();
     }
 }

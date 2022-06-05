@@ -10,6 +10,7 @@ namespace WPF_Teller_App.Interfaces
     {
         public bool AreAllFieldsEmpty();
         public void ClearAllFields();
+        public void Submit();
 
     }
 }

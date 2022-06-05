@@ -30,11 +30,12 @@ namespace WPF_Teller_App.Pages
         public MainWindow MainWindow;
 
         WorkerPage workerPage;
-        AdminPage  adminPage;
+        AdminPage adminPage;
         SettingsPage settingsPage;
 
         private BankWorker worker;
-        public BankWorker  Worker {
+        public BankWorker Worker
+        {
             get => worker;
             set
             {
@@ -43,18 +44,24 @@ namespace WPF_Teller_App.Pages
                     AdminPageChange.Visibility = Visibility.Visible;
                 else
                     AdminPageChange.Visibility = Visibility.Collapsed;
-            } 
+            }
         }
 
         public MainPage()
         {
             InitializeComponent();
             workerPage = new WorkerPage();
+            workerPage.Title = "Worker Page";
             adminPage = new AdminPage();
+            adminPage.Title = "Admin Page";
             settingsPage = new SettingsPage();
+            settingsPage.Title = "Settings Page";
             settingsPage.adminPage = adminPage;
+            settingsPage.workerPage = workerPage;
 
+            ///TODO: Replace with function call
             ContentFrame.Content = workerPage;
+            TitleLabel.Content = workerPage.Title;
             ChangeActiveButton(WorkerPageChange);
         }
 
@@ -65,6 +72,7 @@ namespace WPF_Teller_App.Pages
                 if (CloseCurrentPage())
                     return;
                 ContentFrame.Content = adminPage;
+                TitleLabel.Content = adminPage.Title;
                 ChangeActiveButton(AdminPageChange);
             }
             else
@@ -76,6 +84,7 @@ namespace WPF_Teller_App.Pages
             if (CloseCurrentPage())
                 return;
             ContentFrame.Content = workerPage;
+            TitleLabel.Content = workerPage.Title;
             ChangeActiveButton(WorkerPageChange);
         }
 
@@ -106,6 +115,7 @@ namespace WPF_Teller_App.Pages
             if (CloseCurrentPage())
                 return;
             ContentFrame.Content = settingsPage;
+            TitleLabel.Content = settingsPage.Title;
             ChangeActiveButton(SettingsPageChange);
         }
 
@@ -119,4 +129,4 @@ namespace WPF_Teller_App.Pages
             return true;
         }
     }
-} 
+}
