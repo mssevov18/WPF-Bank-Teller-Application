@@ -48,7 +48,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="3">
                 <Label Content="EGN: "/>
-                <TextBox x:Name="EGNTextBox"/>
+                <TextBox x:Name="EGNTextBox" KeyUp="EGNTextBox_KeyUp"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Grid.Row="4">
                 <Label Content="Address: "/>

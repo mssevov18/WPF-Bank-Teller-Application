@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -65,6 +66,12 @@ namespace WPF_Teller_App.UserControls
             EGNTextBox.Text = string.Empty;
             AddressTextBox.Text = string.Empty;
             BirthDatePicker.Text = string.Empty;
+
+            FirstnameTextBox.IsEnabled = true;
+            MiddlenameTextBox.IsEnabled = true;
+            LastnameTextBox.IsEnabled = true;
+            AddressTextBox.IsEnabled = true;
+            BirthDatePicker.IsEnabled = true;
         }
 
         public void Submit()
@@ -79,7 +86,7 @@ namespace WPF_Teller_App.UserControls
                     testPerson = dbContext.People.Where(person => person.Egn == EGN).FirstOrDefault();
                 //}
 
-                Person person = null;
+                Person person = testPerson;
                 if (testPerson is null)
                     person = this.GetPerson();
 
@@ -98,11 +105,37 @@ namespace WPF_Teller_App.UserControls
                             serializedPerson));
 
                     dbContext.SaveChanges();
+
+                    this.ClearAllFields();
+                    ///TODO_HIGH: Async check if the request is handled and open a msgBox
                 }
             }
             catch (Exception exception)
             {
                 MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
+            }
+        }
+
+        private void EGNTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+            {
+                if (dbContext.People.Where(p => p.Egn == EGN).FirstOrDefault() != null)
+                {
+                    FirstnameTextBox.IsEnabled = false; 
+                    MiddlenameTextBox.IsEnabled = false;
+                    LastnameTextBox.IsEnabled = false;
+                    AddressTextBox.IsEnabled = false;
+                    BirthDatePicker.IsEnabled = false;
+                }
+                else
+                {
+                    FirstnameTextBox.IsEnabled = true;
+                    MiddlenameTextBox.IsEnabled = true;
+                    LastnameTextBox.IsEnabled = true;
+                    AddressTextBox.IsEnabled = true;
+                    BirthDatePicker.IsEnabled = true;
+                }
             }
         }
     }

@@ -48,7 +48,8 @@ namespace WPF_Teller_App.Pages
         {
             // Add All user controlls to the list for easier manipulation
             ucDictionary = new Dictionary<string, IUserControlFormHandler>();
-            ucDictionary.Add("AA", new CreateAccount(Bank_DatabaseContext.BankId));
+            ucDictionary.Add("AA", new CreateAccount());
+            ucDictionary.Add("AF", new FindAccount());
 
             InitializeComponent();
         }
@@ -64,6 +65,7 @@ namespace WPF_Teller_App.Pages
         }
 
 #warning Not implemented "public bool Close()"
+        ///TODO_HIGH: Implement Close()
         public bool Close()
         {
             // Handle user operations.
@@ -162,16 +164,14 @@ namespace WPF_Teller_App.Pages
             //}
         }
 
-#warning Not implemented "private void SubmitButton_Click(object sender, RoutedEventArgs e)"
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ((IUserControlFormHandler)MainContentControl.Content).Submit();
         }
 
-#warning Not implemented "public bool IsMainFieldEmpty()"
         public bool IsMainFieldEmpty()
         {
-            return true;
+            return ((IUserControlFormHandler)MainContentControl.Content).AreAllFieldsEmpty();
         }
     }
 }

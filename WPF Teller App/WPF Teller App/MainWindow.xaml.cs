@@ -56,6 +56,7 @@ namespace WPF_Teller_App
 
         public void ChangeToMainPage()
         {
+            mainPage.OpenWorkerPage();
             ChangePage(mainPage, MainPage.PageWidth, MainPage.PageHeigth);
         }
     }

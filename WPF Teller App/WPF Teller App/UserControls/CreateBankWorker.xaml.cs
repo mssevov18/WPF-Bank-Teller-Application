@@ -53,7 +53,10 @@ namespace WPF_Teller_App.UserControls
             PasswordTextBox.Password = string.Empty;
             PasswordConfirmTextBox.Password = string.Empty;
             IsAdminCheckBox.IsChecked = false;
+
+            DefaultPasswordTextBox();
         }
+
         public void Submit()
         {
             try
@@ -103,16 +106,18 @@ namespace WPF_Teller_App.UserControls
                             null,
                             serializedPerson));
 
-                    dbContext.Requests.Add(new Request(
-                        "T",
-                        DateTime.Now,
-                        null,
-                        "Bank_Worker",
-                        null,
-                        serializedBankWorker));
+                    if (bankWorker != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Bank_Worker",
+                            null,
+                            serializedBankWorker));
                     dbContext.SaveChanges();
 
-                    ///TODO: Freeze App while adding the Worker and Person and show a success/failure message
+                    this.ClearAllFields();
+                    ///TODO_HIGH: Async check if the request is handled and open a msgBox
                 }
             }
             catch (Exception exception)

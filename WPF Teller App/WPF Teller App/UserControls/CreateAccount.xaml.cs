@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 using WPF_Teller_App.Interfaces;
 using Bank_Db_Class_Library;
+using System.Text.Json;
 
 namespace WPF_Teller_App.UserControls
 {
@@ -36,7 +37,6 @@ namespace WPF_Teller_App.UserControls
         public int bankId;
 
         public string AccountIban { get => IBANTextBox.Text; }
-        public string EGN { get => EGNTextBox.Text; }
         public string Email { get => EmailTextBox.Text; }
         public string Password { get => PasswordTextBox.Password; }
         public string PasswordConfirm { get => PasswordConfirmTextBox.Password; }
@@ -73,6 +73,8 @@ namespace WPF_Teller_App.UserControls
             PasswordTextBox.Password = string.Empty;
             PasswordConfirmTextBox.Password = string.Empty;
             BalanceTextBox.Text = string.Empty;
+
+            DefaultPasswordTextBox();
         }
 
         public void DefaultPasswordTextBox()
@@ -102,7 +104,72 @@ namespace WPF_Teller_App.UserControls
 
         public void Submit()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Send Request!
+#warning Bank, Person and Account are all nullable and may return null. Investigate!
+                Bank? testBank;
+                Person? testPerson;
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    testBank = dbContext.Banks.Where(bank => bank.BankId == Bank_DatabaseContext.BankId).FirstOrDefault();
+                    testPerson = dbContext.People.Where(person => person.Egn == CreatePersonUserControl.EGN).FirstOrDefault();
+                }
+
+                if (testBank is null)
+                {
+                    MessageBox.Show("Bank not here");
+                    return;
+                    //throw new Exception("Bank not here");
+                }
+
+                Person person = null;
+                if (testPerson is null)
+                    person = CreatePersonUserControl.GetPerson();
+
+                Account account = new Account(
+                    IBANTextBox.Text,
+                    decimal.Parse(BalanceTextBox.Text),
+                    Bank_DatabaseContext.BankId,
+                    CreatePersonUserControl.EGN,
+                    DateTime.Now,
+                    EmailTextBox.Text,
+                    PasswordTextBox.Password);
+
+                string serializedPerson = JsonSerializer.Serialize<Person>(person);
+                string serializedAccount = JsonSerializer.Serialize<Account>(account);
+
+                // Serialize person and account to json (:
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    if (person != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Person",
+                            null,
+                            serializedPerson));
+
+                    if (account != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Account",
+                            null,
+                            serializedAccount));
+                    dbContext.SaveChanges();
+
+
+                    this.ClearAllFields();
+                    ///TODO_HIGH: Async check if the request is handled and open a msgBox
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
+            }
         }
     }
 }

@@ -59,7 +59,11 @@ namespace WPF_Teller_App.Pages
             settingsPage.adminPage = adminPage;
             settingsPage.workerPage = workerPage;
 
-            ///TODO: Replace with function call
+            OpenWorkerPage();
+        }
+
+        public void OpenWorkerPage()
+        {
             ContentFrame.Content = workerPage;
             TitleLabel.Content = workerPage.Title;
             ChangeActiveButton(WorkerPageChange);

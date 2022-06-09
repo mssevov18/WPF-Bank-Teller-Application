@@ -44,7 +44,6 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -52,24 +51,18 @@
                     <TextBox x:Name="IBANTextBox"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Label Content="EGN: "/>
-                    <TextBox x:Name="EGNTextBox"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2">
                     <Label Content="Email: "/>
                     <TextBox x:Name="EmailTextBox"/>
                 </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Grid.Row="3">
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
                     <Label Content="Password: "/>
                     <PasswordBox x:Name="PasswordTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="4">
+                <StackPanel Orientation="Horizontal" Grid.Row="3">
                     <Label Content="Password Confirm: "/>
                     <PasswordBox x:Name="PasswordConfirmTextBox" KeyDown="PasswordTextBox_KeyDown" KeyUp="PasswordTextBox_KeyDown"/>
                 </StackPanel>
-                
-                <StackPanel Orientation="Horizontal" Grid.Row="5">
+                <StackPanel Orientation="Horizontal" Grid.Row="4">
                     <Label Content="Balance: "/>
                     <TextBox x:Name="BalanceTextBox"/>
                 </StackPanel>
