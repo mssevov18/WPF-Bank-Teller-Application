@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Bank_Db_Class_Library;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,69 +14,117 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 using WPF_Teller_App.Interfaces;
-using Bank_Db_Class_Library;
-using System.Text.Json;
+using WPF_Teller_App.UserControls.PersonControls;
 
-namespace WPF_Teller_App.UserControls
+namespace WPF_Teller_App.UserControls.BankWorkerControls
 {
     /// <summary>
-    /// Interaction logic for CreateAccount.xaml
+    /// Interaction logic for CreateBankWorker.xaml
     /// </summary>
-    public partial class CreateAccount : UserControl, IUserControlFormHandler
+    public partial class CreateBankWorker : UserControl, IUserControlFormHandler
     {
-        public CreateAccount()
+        public CreateBankWorker()
         {
             InitializeComponent();
         }
-        public CreateAccount(int bankId)
-        {
-            this.bankId = bankId;
-            InitializeComponent();
-        }
 
-        public int bankId;
-
-        public string AccountIban { get => IBANTextBox.Text; }
-        public string Email { get => EmailTextBox.Text; }
+        public string Username { get => UsernameTextBox.Text; }
         public string Password { get => PasswordTextBox.Password; }
         public string PasswordConfirm { get => PasswordConfirmTextBox.Password; }
-        public DateTime CreationDate { get => DateTime.Now; }
-        public string Balance { get => BalanceTextBox.Text; }
-
-        public Person PersonNavigation { get => this.GetPerson(); }
-
-        public Person GetPerson()
-        {
-            return CreatePersonUserControl.GetPerson();
-        }
-
-        public Account GetAccount()
-        {
-            return new Account();
-        }
+        public bool IsAdmin { get => IsAdminCheckBox.IsChecked.GetValueOrDefault(); }
+        public string Salary { get => SalaryTextBox.Text; }
+        public CreatePerson PersonUserControl { get => CreatePersonUserControl; }
 
         public bool AreAllFieldsEmpty()
         {
             return CreatePersonUserControl.AreAllFieldsEmpty() &&
-                   IBANTextBox.Text == string.Empty &&
-                   EmailTextBox.Text == string.Empty &&
+                   UsernameTextBox.Text == string.Empty &&
                    PasswordTextBox.Password == string.Empty &&
                    PasswordConfirmTextBox.Password == string.Empty &&
-                   BalanceTextBox.Text == string.Empty;
+                   SalaryTextBox.Text == string.Empty;
         }
 
         public void ClearAllFields()
         {
             CreatePersonUserControl.ClearAllFields();
-            IBANTextBox.Text = string.Empty;
-            EmailTextBox.Text = string.Empty;
+
+            UsernameTextBox.Text = string.Empty;
+            SalaryTextBox.Text = string.Empty;
             PasswordTextBox.Password = string.Empty;
             PasswordConfirmTextBox.Password = string.Empty;
-            BalanceTextBox.Text = string.Empty;
+            IsAdminCheckBox.IsChecked = false;
 
             DefaultPasswordTextBox();
+        }
+
+        public void Submit()
+        {
+            try
+            {
+                // Send Request!
+#warning Bank, Person and BankWorker are all nullable and may return null. Investigate!
+                Bank? testBank;
+                Person? testPerson;
+                BankWorker? testWorker;
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    testBank = dbContext.Banks.Where(bank => bank.BankId == Bank_DatabaseContext.BankId).FirstOrDefault();
+                    testPerson = dbContext.People.Where(person => person.Egn == PersonUserControl.EGN).FirstOrDefault();
+                }
+
+                if (testBank is null)
+                {
+                    MessageBox.Show("Bank not here");
+                    return;
+                    //throw new Exception("Bank not here");
+                }
+
+                Person person = null;
+                if (testPerson is null)
+                    person = PersonUserControl.GetPerson();
+
+                BankWorker bankWorker = new BankWorker(
+                    Username,
+                    Password,
+                    IsAdmin,
+                    decimal.Parse(Salary),
+                    Bank_DatabaseContext.BankId,
+                    PersonUserControl.EGN);
+
+                string serializedPerson = JsonSerializer.Serialize<Person>(person);
+                string serializedBankWorker = JsonSerializer.Serialize<BankWorker>(bankWorker);
+
+                // Serialize person and bankworker to json (:
+                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
+                {
+                    if (person != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Person",
+                            null,
+                            serializedPerson));
+
+                    if (bankWorker != null)
+                        dbContext.Requests.Add(new Request(
+                            "T",
+                            DateTime.Now,
+                            null,
+                            "Bank_Worker",
+                            null,
+                            serializedBankWorker));
+                    dbContext.SaveChanges();
+
+                    this.ClearAllFields();
+                    ///TODO_HIGH: Async check if the request is handled and open a msgBox
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
+            }
         }
 
         public void DefaultPasswordTextBox()
@@ -82,6 +132,7 @@ namespace WPF_Teller_App.UserControls
             PasswordConfirmTextBox.Background = Brushes.White;
             PasswordTextBox.Background = Brushes.White;
         }
+
 
         private void PasswordTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -99,76 +150,6 @@ namespace WPF_Teller_App.UserControls
             {
                 PasswordConfirmTextBox.Background = Brushes.Green;
                 PasswordTextBox.Background = Brushes.Green;
-            }
-        }
-
-        public void Submit()
-        {
-            try
-            {
-                // Send Request!
-#warning Bank, Person and Account are all nullable and may return null. Investigate!
-                Bank? testBank;
-                Person? testPerson;
-                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
-                {
-                    testBank = dbContext.Banks.Where(bank => bank.BankId == Bank_DatabaseContext.BankId).FirstOrDefault();
-                    testPerson = dbContext.People.Where(person => person.Egn == CreatePersonUserControl.EGN).FirstOrDefault();
-                }
-
-                if (testBank is null)
-                {
-                    MessageBox.Show("Bank not here");
-                    return;
-                    //throw new Exception("Bank not here");
-                }
-
-                Person person = null;
-                if (testPerson is null)
-                    person = CreatePersonUserControl.GetPerson();
-
-                Account account = new Account(
-                    IBANTextBox.Text,
-                    decimal.Parse(BalanceTextBox.Text),
-                    Bank_DatabaseContext.BankId,
-                    CreatePersonUserControl.EGN,
-                    DateTime.Now,
-                    EmailTextBox.Text,
-                    PasswordTextBox.Password);
-
-                string serializedPerson = JsonSerializer.Serialize<Person>(person);
-                string serializedAccount = JsonSerializer.Serialize<Account>(account);
-
-                // Serialize person and account to json (:
-                using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
-                {
-                    if (person != null)
-                        dbContext.Requests.Add(new Request(
-                            "T",
-                            DateTime.Now,
-                            null,
-                            "Person",
-                            null,
-                            serializedPerson));
-
-                    if (account != null)
-                        dbContext.Requests.Add(new Request(
-                            "T",
-                            DateTime.Now,
-                            null,
-                            "Account",
-                            null,
-                            serializedAccount));
-                    dbContext.SaveChanges();
-
-
-                    this.ClearAllFields();
-                    ///TODO_HIGH: Async check if the request is handled and open a msgBox
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show($"{exception.ToString()}\n\n{exception.Message}\n\n{exception.StackTrace}\n\n{exception.HelpLink}", $"{exception.GetType().ToString()}");
             }
         }
     }

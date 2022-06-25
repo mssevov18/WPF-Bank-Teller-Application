@@ -15,19 +15,23 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Teller_App.Interfaces;
 
-namespace WPF_Teller_App.UserControls
+namespace WPF_Teller_App.UserControls.AccountControls
 {
     /// <summary>
     /// Interaction logic for FindAccount.xaml
     /// </summary>
     public partial class FindAccount : UserControl, IUserControlFormHandler
     {
-        private Account account;
-        private Person person;
+        public ShowAccount showAccount;
+        public ListAccounts listAccounts;
 
         public FindAccount()
         {
             InitializeComponent();
+
+            showAccount = new ShowAccount();
+            listAccounts = new ListAccounts();
+            ShowAccountFrame.Content = null;
 
             EmailRadioButton.IsChecked = false;
             EGNRadioButton.IsChecked = false;
@@ -53,23 +57,19 @@ namespace WPF_Teller_App.UserControls
             EmailTextBox.IsEnabled = false;
             EGNTextBox.IsEnabled = false;
 
-            EmailLabel.Content = string.Empty;
-            NameLabel.Content = string.Empty;
-            ResidenceLabel.Content = string.Empty;
-            BirthDateLabel.Content = string.Empty;
-            EGNLabel.Content = string.Empty;
-            BalanceLabel.Content = string.Empty;
-            IBANLabel.Content = string.Empty;
+            showAccount.ClearAllFields();
+            listAccounts.ClearAllFields();
+            ShowAccountFrame.Content = null;
         }
 
         public void Submit()
         {
             try
             {
+                Account account = null;
+                Person person = null;
                 using (Bank_DatabaseContext dbContext = new Bank_DatabaseContext())
                 {
-                    account = null;
-                    person = null;
                     if (EmailRadioButton.IsChecked == true)
                     {
                         account = dbContext.Accounts.Where(bw => bw.Email == EmailTextBox.Text).FirstOrDefault();
@@ -88,18 +88,10 @@ namespace WPF_Teller_App.UserControls
                     person = dbContext.People.Where(p => p.Egn == account.PersonEgn).FirstOrDefault();
                 }
                 if (account is not null)
-                {
-                    EmailLabel.Content = account.Email;
-                    BalanceLabel.Content = account.Balance;
-                    EGNLabel.Content = account.PersonEgn;
-                    IBANLabel.Content = account.AccountIban;
-                }
+                    showAccount.Account = account;
                 if (person is not null)
-                {
-                    NameLabel.Content = $"{person.FirstName} {person.MiddleName} {person.LastName}";
-                    ResidenceLabel.Content = $"{person.Residence}";
-                    BirthDateLabel.Content = $"{person.BirthDay}";
-                }
+                    showAccount.Person = person;
+                ShowAccountFrame.Content = showAccount;
             }
             catch (Exception e)
             {
@@ -133,6 +125,12 @@ namespace WPF_Teller_App.UserControls
         {
             if (e.Key == Key.Enter)
                 Submit();
+        }
+
+        private void ShowListButton_Click(object sender, RoutedEventArgs e)
+        {
+            ShowAccountFrame.Content = listAccounts;
+            listAccounts.Submit();
         }
     }
 }

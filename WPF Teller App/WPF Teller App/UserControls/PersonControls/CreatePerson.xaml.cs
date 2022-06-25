@@ -17,7 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Teller_App.Interfaces;
 
-namespace WPF_Teller_App.UserControls
+namespace WPF_Teller_App.UserControls.PersonControls
 {
     /// <summary>
     /// Interaction logic for CreatePerson.xaml

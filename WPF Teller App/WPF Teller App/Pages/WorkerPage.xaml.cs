@@ -17,7 +17,9 @@ using System.Windows.Shapes;
 
 using WPF_Teller_App.Interfaces;
 using WPF_Teller_App.Pages;
-using WPF_Teller_App.UserControls;
+using WPF_Teller_App.UserControls.PersonControls;
+using WPF_Teller_App.UserControls.AccountControls;
+using WPF_Teller_App.UserControls.BankWorkerControls;
 
 ///TODO_HIGH: Make AddAccount
 ///TODO_HIGH: Make ChangeAccount

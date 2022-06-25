@@ -16,7 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF_Teller_App.Interfaces;
-using WPF_Teller_App.UserControls;
+using WPF_Teller_App.UserControls.BankWorkerControls;
+using WPF_Teller_App.UserControls.AccountControls;
+using WPF_Teller_App.UserControls.PersonControls;
 
 ///IDEA: Add salt and hashed passwords
 

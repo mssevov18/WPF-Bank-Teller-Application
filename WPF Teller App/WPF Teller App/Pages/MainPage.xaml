@@ -59,6 +59,7 @@
 
         <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Black"/>
 
+        <!--TODO_HIGH: Check if NavigiationUI is still active (it shouldn't be)-->
         <Frame x:Name="ContentFrame" Grid.Row="2" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Page>
